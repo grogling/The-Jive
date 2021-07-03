@@ -64,11 +64,11 @@ public class GameManager : MonoBehaviour {
 			_currentInterval = 0;
 
             // pop the unit when selected
-           // _beatsource.Play();
+            // _beatsource.Play();
+            Destroy(signalClone); // remove signal clone
             ActiveUnit.transform.DOScale(1.5f, 0.1f).OnComplete(() =>
             {
                 ActiveUnit.transform.localScale = new Vector3(1, 1, 1);
-                Destroy(signalClone); // remove signal clone
             });
         
 		}
