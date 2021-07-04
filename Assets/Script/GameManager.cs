@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour {
     public GameObject ActiveUnit; // the unit currently allowed to move
   public GameObject deadpulser; // The queen
   public GameObject activation_signal; // once the signal reaches a unit, it should be able to move
-  public float activation_frequency = 60;
+  public float activation_frequency = 56.5f;
   public float activation_period = 0;
 
 
