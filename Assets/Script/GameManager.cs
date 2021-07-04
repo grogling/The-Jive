@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour {
     public GameObject ActiveUnit; // the unit currently allowed to move
   public GameObject deadpulser; // The queen
   public GameObject activation_signal; // once the signal reaches a unit, it should be able to move
-  public float activation_frequency = 70;
+  public float activation_frequency = 60;
   public float activation_period = 0;
 
 
@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour {
 			if (_activeUnitIndex == this.Units.Length) //Once you get through all the units restart
             {
 				_activeUnitIndex = 0;
-               // _beatsource.Play();
+               
 			}
             if (_nextUnitIndex == this.Units.Length) //Next unit index has to go back to 0 once the active unit index reaches the max
             {
@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour {
 
 
             Destroy(signalClone); // remove signal clone
+            _beatsource.Play();
             ActiveUnit.transform.DOScale(1.5f, 0.1f).OnComplete(() =>
             {
                 ActiveUnit.transform.localScale = new Vector3(1, 1, 1);
