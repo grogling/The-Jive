@@ -6,10 +6,10 @@ public class GameManager : MonoBehaviour {
 
 	public GameObject[] Units = new GameObject[4];
   public GameObject NextUnit; // index used to keep track of the unit after the current unit
-	public GameObject ActiveUnit; // the unit currently allowed to move
+    public GameObject ActiveUnit; // the unit currently allowed to move
   public GameObject deadpulser; // The queen
   public GameObject activation_signal; // once the signal reaches a unit, it should be able to move
-  public float activation_frequency = 30;
+  public float activation_frequency = 70;
   public float activation_period = 0;
 
 
@@ -62,8 +62,7 @@ public class GameManager : MonoBehaviour {
 
 			_currentInterval = 0;
 
-            // pop the unit when selected
-            // _beatsource.Play();
+
             Destroy(signalClone); // remove signal clone
             ActiveUnit.transform.DOScale(1.5f, 0.1f).OnComplete(() =>
             {
