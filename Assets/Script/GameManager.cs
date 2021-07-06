@@ -6,24 +6,18 @@ public class GameManager : MonoBehaviour {
 
 	public GameObject[] Units = new GameObject[4];
   public GameObject NextUnit; // index used to keep track of the unit after the current unit
-    public GameObject ActiveUnit; // the unit currently allowed to move
+  public GameObject ActiveUnit; // the unit currently allowed to move
   public GameObject deadpulser; // The queen
   public GameObject activation_signal; // once the signal reaches a unit, it should be able to move
   public float activation_frequency = 56.5f;
   public float activation_period = 0;
-
-
   private int _activeUnitIndex; // the index of the active unit
   private int _nextUnitIndex = 1; // the index of the next unit set equal to one to always be 1 ahead of the active index
   private GameObject signalClone;
-
-
-  public AudioClip _beat;
+	public AudioClip _beat;
   public AudioSource _beatsource;
-
   private float _currentInterval = 0; // the intitiation of the timing
   private float _deadpulse = 0; // be one second off the unit control
-
   public static GameManager Instance;
 
     // Use this for initialization
@@ -39,18 +33,17 @@ public class GameManager : MonoBehaviour {
 	void Update () {
 
 		_currentInterval += Time.deltaTime; //records the time passed
-        _deadpulse += Time.deltaTime; //records an offset time passed
+    _deadpulse += Time.deltaTime; //records an offset time passed
 
 
 		if (_currentInterval >= activation_period)
         {
-
             _activeUnitIndex++;
             _nextUnitIndex++;
 			if (_activeUnitIndex == this.Units.Length) //Once you get through all the units restart
             {
 				_activeUnitIndex = 0;
-               
+
 			}
             if (_nextUnitIndex == this.Units.Length) //Next unit index has to go back to 0 once the active unit index reaches the max
             {
