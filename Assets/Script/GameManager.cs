@@ -31,7 +31,6 @@ public class GameManager : MonoBehaviour {
 		}
 
 	void Update () {
-
 		_currentInterval += Time.deltaTime; //records the time passed
     _deadpulse += Time.deltaTime; //records an offset time passed
 
@@ -40,6 +39,7 @@ public class GameManager : MonoBehaviour {
         {
             _activeUnitIndex++;
             _nextUnitIndex++;
+
 			if (_activeUnitIndex == this.Units.Length) //Once you get through all the units restart
             {
 				_activeUnitIndex = 0;
@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour {
                 _nextUnitIndex = 0;
             }
             ActiveUnit = Units[_activeUnitIndex];
+            ActiveUnit.GetComponent<movement>().canMove = true;
             NextUnit = Units[_nextUnitIndex];
 
 

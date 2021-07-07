@@ -7,29 +7,26 @@ using System.Diagnostics;
 using System;
 
 public class movement : MonoBehaviour {
+    private float unitspeed = 15f;
+    private Vector3 unitposition = new Vector3(0, 0, 0);
+    public bool canMove = true , moving=false;
+    public GameObject AU;
+    public float movelength = 1f; // how far the unit move
+    Rigidbody2D rb;
 
-  private float unitspeed = 15f;
-  private Vector3 unitposition= new Vector3(0,0,0);
-  private bool canMove = true , moving=false;
-  public GameObject AU;
-  public float movelength = 2f; // how far the unit moves
-  private float cooldowntime = 1f; // cooldown on moving
-  private float nextmovetime = 0f; // the next time you are able to move
-  Rigidbody2D rb;
-
-  void Start()
-  {
+    void Start()
+    {
     rb = GetComponent<Rigidbody2D>();
-  }
+    }
 
-  void Update ()
-  {
+    void Update ()
+    {
     AU = GameManager.Instance.ActiveUnit;
-    if (AU == gameObject)
+    if (AU == gameObject) //gameObject is the object the script is linked to.
     {
         MoveExecution();
     }
-  }
+    }
 
   private void Movefun()
   // This function translates directional keys into movement
@@ -48,20 +45,16 @@ public class movement : MonoBehaviour {
     int directionSum = upInt + downInt + leftInt + rightInt;
     Vector3 direction = new Vector3(rightInt - leftInt, upInt - downInt,0);
 
-    if (Time.time > nextmovetime)
-    {
-      if(directionSum > 1)
-      {
-        canMove = true;
-        moving = false;
-      }
 
-      else if (directionSum == 1)
-      {
+    if(directionSum > 1)
+    {
+        moving = false;
+    }
+    else if (directionSum == 1)
+    {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 1f);
         if (hit.collider != null)
         {
-            canMove = true;
             moving = false;
         }
         else
@@ -69,9 +62,7 @@ public class movement : MonoBehaviour {
             canMove = false;
             moving = true;
             unitposition += direction * movelength; // this is the position the unit will move to when you hit the directional key
-            nextmovetime = Time.time + cooldowntime; // this let's you only input one movement command per cycle
         }
-      }
     }
   }
 
@@ -80,20 +71,18 @@ public class movement : MonoBehaviour {
 	public void MoveExecution()
   // This is the actual execution of the move function
 	{
-		if (canMove)
+        if (canMove)
 		{
-      unitposition = transform.position;
-			Movefun ();
+            unitposition = transform.position;
+			Movefun();
 		}
 		if (moving)
 		{
 			if (transform.position==unitposition)
-      {
+            {
 				moving=false;
-				canMove= true;
-				Movefun();
-      }
+            }
 			transform.position = Vector3.MoveTowards (transform.position, unitposition, Time.deltaTime*unitspeed);
-    }
+        }
 	}
 }
