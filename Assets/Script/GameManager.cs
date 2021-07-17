@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour {
         ActiveUnit = Units [0]; //starts with the first unit in the array
         NextUnit = Units[1];
         Instance = this;
-		}
+	}
 
 	void Update () {
 		_currentInterval += Time.deltaTime; //records the time passed
