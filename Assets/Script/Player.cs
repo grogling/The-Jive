@@ -25,8 +25,12 @@ public class Player : MovingObject
     void Update()
     {
         AU = GameManager.Instance.ActiveUnit;
-        if (AU != gameObject) return; //gameObject is the object the script is linked to.
-        Movefun();
+        if (AU == gameObject || canMove == true)
+        {
+            canMove = false;
+            Movefun(); //gameObject is the object the script is linked to.
+            canMove = false;
+        }
         
     }
 
@@ -48,8 +52,8 @@ public class Player : MovingObject
         Vector3 direction = new Vector3(rightInt - leftInt, upInt - downInt, 0);
         if (directionSum == 1 || canMove == true)
         {
-            AttemptMove(rightInt - leftInt, upInt - downInt);
             canMove = false;
+            AttemptMove(rightInt - leftInt, upInt - downInt);
         }
         
     }

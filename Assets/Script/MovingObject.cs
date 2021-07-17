@@ -9,6 +9,7 @@ public abstract class MovingObject : MonoBehaviour
 {
     public float unitspeed = 15f;
     public float movelength = 1f;
+    public bool canMove = true, moving = false;
 
     private BoxCollider2D boxCollider;
     private Rigidbody2D rb2D;
@@ -33,27 +34,17 @@ public abstract class MovingObject : MonoBehaviour
         if (hit.collider ==null)
         //check if raycast does not hit, move
         {
-            StartCoroutine(Moving(end));
+            transform.position = Vector3.MoveTowards(start, end, Time.deltaTime * unitspeed);
             return true;
         }
         else
         // if raycast hits can't move
         {
+            moving = false;
             return false;
         }
     }
 
-    protected IEnumerator Moving (Vector3 end)
-    {
-        float sqrRemainingDistance = (transform.position - end).sqrMagnitude;
-        while(sqrRemainingDistance >float.Epsilon)
-        {
-            Vector3 newPosition = Vector3.MoveTowards(rb2D.position, end, Time.deltaTime * unitspeed);
-            rb2D.MovePosition(newPosition);
-            sqrRemainingDistance = (transform.position - end).sqrMagnitude;
-            yield return null;
-        }
-    }
     
     protected virtual void AttemptMove (int xDir, int yDir)
     {
