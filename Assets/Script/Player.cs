@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class Player : MovingObject
@@ -7,7 +8,6 @@ public class Player : MovingObject
     public int wallDamage = 1;
     public int enemyDamage = 1;
     public GameObject AU;
-    public bool canMove = true;
 
     private Animator animator;
     private int health;
@@ -25,11 +25,21 @@ public class Player : MovingObject
     void Update()
     {
         AU = GameManager.Instance.ActiveUnit;
-        if (AU == gameObject || canMove == true)
+        if (AU == gameObject)
         {
-            canMove = false;
-            Movefun(); //gameObject is the object the script is linked to.
-            canMove = false;
+            if (canMove)
+            {
+                unitposition = transform.position;
+                Movefun();
+            }
+            if (moving)
+            {
+                if (transform.position == unitposition)
+                {
+                    moving = false;
+                }
+                transform.position = Vector3.MoveTowards(transform.position, unitposition, Time.deltaTime * unitspeed);
+            }
         }
         
     }
@@ -37,6 +47,8 @@ public class Player : MovingObject
     private void Movefun()
     // This function translates directional keys into movement
     {
+        RaycastHit2D hit;
+
         bool upPress = Input.GetKey(KeyCode.UpArrow);
         bool downPress = Input.GetKey(KeyCode.DownArrow);
         bool leftPress = Input.GetKey(KeyCode.LeftArrow);
@@ -49,12 +61,16 @@ public class Player : MovingObject
         rightInt = rightPress ? 1 : 0;
 
         int directionSum = upInt + downInt + leftInt + rightInt;
-        Vector3 direction = new Vector3(rightInt - leftInt, upInt - downInt, 0);
-        if (directionSum == 1 || canMove == true)
+        Vector3 direction = new Vector3(rightInt - leftInt, upInt - downInt,0);
+        if (directionSum > 1 )
         {
-            canMove = false;
-            AttemptMove(rightInt - leftInt, upInt - downInt);
+            moving = false;
         }
+        else if (directionSum == 1)
+        {
+            AttemptMove(rightInt - leftInt, upInt - downInt, out hit);            
+        }
+
         
     }
 

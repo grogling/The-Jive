@@ -14,8 +14,8 @@ public class GameManager : MonoBehaviour {
   private int _activeUnitIndex; // the index of the active unit
   private int _nextUnitIndex = 1; // the index of the next unit set equal to one to always be 1 ahead of the active index
   private GameObject signalClone;
-	public AudioClip _beat;
-  public AudioSource _beatsource;
+  //public AudioClip _beat;
+  //public AudioSource _beatsource;
   private float _currentInterval = 0; // the intitiation of the timing
   private float _deadpulse = 0; // be one second off the unit control
   public static GameManager Instance;
@@ -50,8 +50,8 @@ public class GameManager : MonoBehaviour {
                 _nextUnitIndex = 0;
             }
             ActiveUnit = Units[_activeUnitIndex];
-            ActiveUnit.GetComponent<movement>().canMove = true;
-            //ActiveUnit.GetComponent<Player>().canMove = true;
+            //ActiveUnit.GetComponent<movement>().canMove = true;
+            ActiveUnit.GetComponent<Player>().canMove = true;
             NextUnit = Units[_nextUnitIndex];
 
 
@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour {
 
 
             Destroy(signalClone); // remove signal clone
-            _beatsource.Play();
+            //_beatsource.Play();
             ActiveUnit.transform.DOScale(1.5f, 0.1f).OnComplete(() =>
             {
                 ActiveUnit.transform.localScale = new Vector3(1, 1, 1);

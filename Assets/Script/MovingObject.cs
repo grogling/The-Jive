@@ -10,6 +10,7 @@ public abstract class MovingObject : MonoBehaviour
     public float unitspeed = 15f;
     public float movelength = 1f;
     public bool canMove = true, moving = false;
+    public Vector3 unitposition = new Vector3(0, 0, 0);
 
     private BoxCollider2D boxCollider;
     private Rigidbody2D rb2D;
@@ -24,35 +25,26 @@ public abstract class MovingObject : MonoBehaviour
     }
 
     //Returns true if able to move
-    protected bool Move (int xDir, int yDir, out RaycastHit2D hit)
+    protected bool AttemptMove (int xDir, int yDir, out RaycastHit2D hit)
     {
         Vector3 start = transform.position;
-        Vector3 end = start + new Vector3(xDir, yDir, 0);
-        Vector3 direction = end - start;
+        Vector3 direction = new Vector3(xDir, yDir, 0);
         hit = Physics2D.Raycast(transform.position, direction, 1f);
                 
-        if (hit.collider ==null)
-        //check if raycast does not hit, move
+        if (hit.collider != null)
         {
-            transform.position = Vector3.MoveTowards(start, end, Time.deltaTime * unitspeed);
-            return true;
+            return false;
+            moving = false;
         }
         else
-        // if raycast hits can't move
+        // if raycast doesn't hit
         {
-            moving = false;
-            return false;
+            canMove = false;
+            moving = true;
+            unitposition += direction*movelength; 
+            return true;
+
         }
-    }
-
-    
-    protected virtual void AttemptMove (int xDir, int yDir)
-    {
-        RaycastHit2D hit;
-
-        bool canMove = Move(xDir, yDir, out hit);
-
-        if (hit.collider == null) return;
     }
 }
 
