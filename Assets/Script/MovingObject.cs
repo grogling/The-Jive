@@ -54,7 +54,15 @@ public abstract class MovingObject : MonoBehaviour
             yield return null;
         }
     }
+    
+    protected virtual void AttemptMove (int xDir, int yDir)
+    {
+        RaycastHit2D hit;
 
+        bool canMove = Move(xDir, yDir, out hit);
+
+        if (hit.collider == null) return;
+    }
 }
 
 

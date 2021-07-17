@@ -50,7 +50,8 @@ public class GameManager : MonoBehaviour {
                 _nextUnitIndex = 0;
             }
             ActiveUnit = Units[_activeUnitIndex];
-            ActiveUnit.GetComponent<movement>().canMove = true;
+            //ActiveUnit.GetComponent<movement>().canMove = true;
+            ActiveUnit.GetComponent<Player>().canMove = true;
             NextUnit = Units[_nextUnitIndex];
 
 
