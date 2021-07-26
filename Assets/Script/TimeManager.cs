@@ -21,13 +21,10 @@ public class TimeManager : MonoBehaviour
     public float dspSongTime = 0; //How many seconds have passed since the song started
     public AudioSource musicSource; //an AudioSource attached to this GameObject that will play the music.
     public float turn_time = 0;
-    public float offbeat_time;
-    public float turn_clock = 0;
-    public float offbeat_clock = 0;
+    public float turn_count = 1;
+    public float offset_count = 1;
     public int _activeUnitIndex; // the index of the active unit
     public int _nextUnitIndex = 1; // the index of the next unit set equal to one to always be 1 ahead of the active index
-    public float[] SongPosRef = new float [2];
-    public float SongPosRefindex = 0;
     public static TimeManager instance;
 
 
@@ -44,63 +41,47 @@ public class TimeManager : MonoBehaviour
         secPerBeat = 60F / songBpm;
         musicSource.Play();
         turn_time = 1 / (songBpm / 60);
-        offbeat_time = 0 - turn_time;
-}
+    }
 
     // Update is called once per frame
     void Update()
     {
         songPosition = (float)(AudioSettings.dspTime - dspSongTime);
         songPosInBeats = songPosition / secPerBeat;
-        turn_clock = SongPosRef[1] - SongPosRef[0];
-        offbeat_clock += Time.deltaTime;
-        if (SongPosRefindex==0)
+
+        if (songPosition / turn_count >= turn_time)
         {
-         SongPosRef[0] = songPosition;
-         SongPosRefindex++;
-        }
-        if (SongPosRefindex>=1)
-        {
-         SongPosRef[1] = songPosition;
-         SongPosRefindex++;
-            if (SongPosRef[1]-SongPosRef[0] >= turn_time)
+            _activeUnitIndex++;
+            _nextUnitIndex++;
+
+            if (_activeUnitIndex == this.Units.Length) //Once you get through all the units restart
             {
-                SongPosRef[0] = SongPosRef[1];
-                SongPosRefindex = 0;
-                _activeUnitIndex++;
-                _nextUnitIndex++;
-
-
-                if (_activeUnitIndex == this.Units.Length) //Once you get through all the units restart
-                {
-                    _activeUnitIndex = 0;
-
-                }
-                if (_nextUnitIndex == this.Units.Length) //Next unit index has to go back to 0 once the active unit index reaches the max
-                {
-                    _nextUnitIndex = 0;
-                }
-                ActiveUnit = Units[_activeUnitIndex];
-                ActiveUnit.GetComponent<Player>().canMove = true;
-                NextUnit = Units[_nextUnitIndex];
-                turn_clock = 0;
-                ActiveUnit.transform.DOScale(1.5f, 0.1f).OnComplete(() =>
-                {
-                    ActiveUnit.transform.localScale = new Vector3(1, 1, 1);
-                });
+                _activeUnitIndex = 0;
 
             }
+            if (_nextUnitIndex == this.Units.Length) //Next unit index has to go back to 0 once the active unit index reaches the max
+            {
+                _nextUnitIndex = 0;
+            }
+            ActiveUnit = Units[_activeUnitIndex];
+            ActiveUnit.transform.DOScale(1.5f, 0.1f).OnComplete(() =>
+            {
+                ActiveUnit.transform.localScale = new Vector3(1, 1, 1);
+            });
+
+            ActiveUnit.GetComponent<Player>().canMove = true;
+            NextUnit = Units[_nextUnitIndex];
+            turn_count++;
+
         }
-
-        //if (offbeat_clock >= turn_time / 4) // Occurs in between turns
-        //{
-          //  Queen.transform.DOScale(1.5f, 0.1f).OnComplete(() =>
-            //{
-              //  Queen.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f); // using .5 instead of 1 since the queen sprite is too large. The initial object is .5 scale
-            //});
-            //offbeat_clock = 0 - (turn_time / 2); // it has to be offset by .5 seconds
+        if ((songPosition-(turn_time/2)) / offset_count>= turn_time)
+        {
+         Queen.transform.DOScale(1.5f, 0.1f).OnComplete(() =>
+        {
+         Queen.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f); // using .5 instead of 1 since the queen sprite is too large. The initial object is .5 scale
+        });
             //Instantiate(activation_signal, Queen.transform.position, Quaternion.identity); //creates the signal to the units at the location of the queen sprite
-
+            offset_count++;
         }
     }
-
+}
