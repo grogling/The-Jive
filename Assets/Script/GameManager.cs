@@ -4,7 +4,7 @@ using DG.Tweening;
 
 public class GameManager : MonoBehaviour {
 
-	public GameObject[] Units = new GameObject[4];
+    public GameObject[] Units = new GameObject[4];
   public GameObject NextUnit; // index used to keep track of the unit after the current unit
   public GameObject ActiveUnit; // the unit currently allowed to move
   public GameObject deadpulser; // The queen
@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour {
   //public AudioSource _beatsource;
   private float _currentInterval = 0; // the intitiation of the timing
   private float _deadpulse = 0; // be one second off the unit control
-  public static GameManager Instance;
+  public static GameManager Instance= null;
 
     // Use this for initialization
     void Awake ()
@@ -27,7 +27,13 @@ public class GameManager : MonoBehaviour {
         _deadpulse = 0 - activation_period;
         ActiveUnit = Units [0]; //starts with the first unit in the array
         NextUnit = Units[1];
-        Instance = this;
+        if (Instance == null)
+            Instance = this;
+        else if (Instance != this)
+            Destroy(gameObject);
+        DontDestroyOnLoad(gameObject);
+
+
 	}
 
 	void Update () {

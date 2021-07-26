@@ -7,7 +7,7 @@ public class Player : MovingObject
 {
     public int wallDamage = 1;
     public int enemyDamage = 1;
-    public GameObject AU;
+    public GameObject ActiveUnit;
 
     private Animator animator;
     private int health;
@@ -24,8 +24,8 @@ public class Player : MovingObject
     // Update is called once per frame
     void Update()
     {
-        AU = GameManager.Instance.ActiveUnit;
-        if (AU == gameObject)
+        ActiveUnit = TimeManager.instance.ActiveUnit;
+        if (ActiveUnit == gameObject)
         {
             if (canMove)
             {
