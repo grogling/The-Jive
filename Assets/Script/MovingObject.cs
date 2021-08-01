@@ -19,7 +19,8 @@ public abstract class MovingObject : MonoBehaviour
     // Protected Virtual Functions can be overwritten by inheriting class
     protected virtual void Start()
     {
-        
+
+        Physics2D.queriesStartInColliders = false;
         boxCollider = GetComponent<BoxCollider2D>();
         rb2D = GetComponent<Rigidbody2D>();
     }
