@@ -9,7 +9,6 @@ public class activation_signal : MonoBehaviour {
     RaycastHit2D hit;
     private float velx = 0;
     private float vely = 0;
-    private int PlayerMask = 0;
     private float turn_time;
     private float current_songPosition;
     private float time_delta = 0;

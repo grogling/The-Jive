@@ -34,8 +34,8 @@ public abstract class MovingObject : MonoBehaviour
                 
         if (hit.collider != null)
         {
-            return false;
             moving = false;
+            return false;
         }
         else
         // if raycast doesn't hit

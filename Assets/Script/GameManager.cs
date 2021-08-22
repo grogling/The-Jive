@@ -5,11 +5,16 @@ using DG.Tweening;
 public class GameManager : MonoBehaviour {
 
 
-    public static GameManager instance;
+    public static GameManager instance = null;
     // Use this for initialization
     void Awake ()
     {
-        instance = this;
+        if (instance = null)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
+
+        DontDestroyOnLoad(gameObject);
 
     }
 
