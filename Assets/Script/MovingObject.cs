@@ -1,8 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
 using UnityEngine;
 
 public abstract class MovingObject : MonoBehaviour
@@ -26,7 +22,7 @@ public abstract class MovingObject : MonoBehaviour
     }
 
     //Returns true if able to move
-    protected bool AttemptMove (int xDir, int yDir, out RaycastHit2D hit)
+    protected virtual void AttemptMove (int xDir, int yDir, out RaycastHit2D hit)
     {
         Vector3 start = transform.position;
         Vector3 direction = new Vector3(xDir, yDir, 0);
@@ -35,7 +31,7 @@ public abstract class MovingObject : MonoBehaviour
         if (hit.collider != null)
         {
             moving = false;
-            return false;
+            return;
         }
         else
         // if raycast doesn't hit
@@ -43,7 +39,7 @@ public abstract class MovingObject : MonoBehaviour
             canMove = false;
             moving = true;
             unitposition += direction*movelength; 
-            return true;
+            return;
 
         }
     }

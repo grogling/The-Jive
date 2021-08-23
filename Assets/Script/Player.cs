@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using UnityEngine;
 
 public class Player : MovingObject
@@ -17,8 +16,7 @@ public class Player : MovingObject
         animator = GetComponent<Animator>();
         //upgrade = GameManager.instance.upgrades
 
-        //call the start function of MovingObject Class
-        base.Start();
+        base.Start();//call the start function of MovingObject Class
     }
 
     // Update is called once per frame
@@ -68,7 +66,11 @@ public class Player : MovingObject
         }
         else if (directionSum == 1)
         {
-            AttemptMove(rightInt - leftInt, upInt - downInt, out hit);            
+            AttemptMove(rightInt - leftInt, upInt - downInt, out hit);
+            if (hit.collider && hit.collider.tag == "Wall") // use the ray cast to figure out what object you hit
+            {
+                print("hit a wall");
+            }
         }
 
         
