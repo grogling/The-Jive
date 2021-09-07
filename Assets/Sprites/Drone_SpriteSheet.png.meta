@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a5d0629316dadc24caa9103ed1ad8bf5
+guid: 99ebb16d447f15241b6b44742ec9f537
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -56,7 +56,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -118,8 +118,8 @@ TextureImporter:
       name: Drone_SpriteSheet_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 193
+        x: 1
+        y: 192
         width: 30
         height: 31
       alignment: 0
@@ -139,7 +139,7 @@ TextureImporter:
       name: Drone_SpriteSheet_1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 33
         y: 192
         width: 32
         height: 32
@@ -160,8 +160,8 @@ TextureImporter:
       name: Drone_SpriteSheet_2
       rect:
         serializedVersion: 2
-        x: 66
-        y: 192
+        x: 67
+        y: 191
         width: 31
         height: 32
       alignment: 0
@@ -181,8 +181,8 @@ TextureImporter:
       name: Drone_SpriteSheet_3
       rect:
         serializedVersion: 2
-        x: 99
-        y: 193
+        x: 100
+        y: 192
         width: 30
         height: 31
       alignment: 0
@@ -202,9 +202,9 @@ TextureImporter:
       name: Drone_SpriteSheet_4
       rect:
         serializedVersion: 2
-        x: 130
-        y: 193
-        width: 31
+        x: 131
+        y: 192
+        width: 30
         height: 31
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -224,9 +224,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 162
-        y: 194
+        y: 192
         width: 30
-        height: 29
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -245,9 +245,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 194
-        y: 194
-        width: 32
-        height: 30
+        y: 192
+        width: 30
+        height: 31
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -266,9 +266,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 225
-        y: 194
-        width: 29
-        height: 29
+        y: 192
+        width: 30
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
