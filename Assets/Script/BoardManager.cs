@@ -19,18 +19,49 @@ public class BoardManager : MonoBehaviour
         }
     }
 
-    public int columns = 30;
-    public int rows = 30;
-    public GameObject[] Walls;
+    public int columns = 15;
+    public int rows = 15;
+    public GameObject[] walls;
+    public GameObject[] floortiles;
 
-    void Start()
+    private Transform boardHolder;
+    private List<Vector3> gridpositions = new List<Vector3>();
+
+    void InitializeList()
     {
-        
+        gridpositions.Clear ();
+
+        for (int x = 1; x < columns-1; x++)
+        {
+            for (int y = 1; y < rows-1; y++)
+                gridpositions.Add(new Vector3(x, y, 0f));
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    void BoardSetup()
     {
-        
+        boardHolder = new GameObject("Board").transform;
+            for (int x = -1; x < columns + 1; x++)
+        {
+            for (int y = -1; y < rows + 1; y++)
+            {
+                GameObject toInstantiate = floortiles[0];
+
+                if (x == -1 || x == columns || y == -1 || y == rows)
+                    toInstantiate = walls[0];
+
+                GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f),Quaternion.identity) as GameObject;
+
+                instance.transform.SetParent(boardHolder);
+
+            }
+        }
+    }
+
+    public void SetupScene()
+    {
+        BoardSetup();
+        InitializeList();
     }
 }
+

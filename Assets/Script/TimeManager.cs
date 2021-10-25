@@ -16,20 +16,20 @@ public class TimeManager : MonoBehaviour
     public GameObject activation_signal; // once the signal reaches a unit, it should be able to move
     public float songBpm = 60; //Song beats per minute This is determined by the song you're trying to sync up to
     public float songPosition = 0; //Current song position, in seconds
-    public float songPosInBeats = 0;
-    public float secPerBeat = 0;
-    public float dspSongTime = 0; //How many seconds have passed since the song started
+    private float songPosInBeats = 0;
+    private float secPerBeat = 0;
+    private float dspSongTime = 0; //How many seconds have passed since the song started
     public AudioSource musicSource; //an AudioSource attached to this GameObject that will play the music.
     public float turn_time = 0;
-    public float turn_count = 1;
-    public float offset_count = 1;
-    public int _activeUnitIndex; // the index of the active unit
-    public int _nextUnitIndex = 1; // the index of the next unit set equal to one to always be 1 ahead of the active index
+    private float turn_count = 1;
+    private float offset_count = 1;
+    private int _activeUnitIndex; // the index of the active unit
+    private int _nextUnitIndex = 1; // the index of the next unit set equal to one to always be 1 ahead of the active index
     public static TimeManager instance;
 
 
     // Start is called before the first frame update
-    void Awake()
+    public void initializeMusic()
     {
         instance = this;
 
@@ -44,7 +44,7 @@ public class TimeManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void initializeTurn()
     {
         songPosition = (float)(AudioSettings.dspTime - dspSongTime);
         songPosInBeats = songPosition / secPerBeat;
