@@ -19,8 +19,8 @@ public class BoardManager : MonoBehaviour
         }
     }
 
-    public int columns = 15;
-    public int rows = 15;
+    public int columns = 14;
+    public int rows = 14;
     public GameObject[] walls;
     public GameObject[] floortiles;
 
@@ -34,19 +34,23 @@ public class BoardManager : MonoBehaviour
         for (int x = 1; x < columns-1; x++)
         {
             for (int y = 1; y < rows-1; y++)
+            {
                 gridpositions.Add(new Vector3(x, y, 0f));
+
+            }
+                
         }
     }
 
     void BoardSetup()
     {
         boardHolder = new GameObject("Board").transform;
-            for (int x = -1; x < columns + 1; x++)
+        for (int x = -1; x < columns + 1; x++)
         {
             for (int y = -1; y < rows + 1; y++)
             {
                 GameObject toInstantiate = floortiles[0];
-
+                         
                 if (x == -1 || x == columns || y == -1 || y == rows)
                     toInstantiate = walls[0];
 
@@ -58,10 +62,59 @@ public class BoardManager : MonoBehaviour
         }
     }
 
+
+    void RoomSetup()
+    {
+        GameObject toInstantiate= walls[0];
+        for (int x = -1; x < columns; x++)
+        {
+            for (int y = -1; y < rows; y++)
+            {
+                if (x == 4 || x == 9 || y == 4 || y == 9)
+                {
+                    toInstantiate = walls[0];
+                    gridpositions.Remove(new Vector3(x, y, 0f));
+                    GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
+                }
+                
+            }
+        }
+    }
+
+    Vector3 RandomPosition()
+    {
+        int randomIndex = Random.Range(0, gridpositions.Count);
+        Vector3 randomPosition = gridpositions[randomIndex];
+        gridpositions.RemoveAt(randomIndex);
+        return randomPosition;
+    }
+
+    void ObjectPlacement (GameObject[] objectArray, int minimum, int maximum)
+    {
+        int objectCount = Random.Range(minimum, maximum + 1);
+        for (int i = 0; i <objectCount; i++)
+        {
+            Vector3 randomPosition = RandomPosition();
+            GameObject objectChoice = objectArray[Random.Range(0, objectArray.Length)];
+            Instantiate(objectChoice, randomPosition, Quaternion.identity);
+        }
+        
+               
+        
+    }
+
     public void SetupScene()
     {
         BoardSetup();
         InitializeList();
+        RoomSetup();
+        ObjectPlacement(walls, 1, 10);
+        foreach (Vector3 x in gridpositions)
+        {
+            Debug.Log(x);
+        }
+       
+
     }
 }
 
