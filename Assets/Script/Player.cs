@@ -42,7 +42,7 @@ public class Player : MovingObject
         
     }
 
-    private void Movefun()
+    private void Movefun ()
     // This function translates directional keys into movement
     {
         RaycastHit2D hit;
@@ -67,15 +67,41 @@ public class Player : MovingObject
         else if (directionSum == 1)
         {
             AttemptMove(rightInt - leftInt, upInt - downInt, out hit);
-            if (hit.collider && hit.collider.tag == "Wall") // use the ray cast to figure out what object you hit
+            /*if (hit.collider && hit.collider.tag == "Wall") // use the ray cast to figure out what object you hit
             {
-                print("hit a wall");
-            }
+                hit.collider.GetComponent<Wall>().DamageWall(wallDamage);
+            }*/
         }
 
         
     }
+    protected override void AttemptMove(int xDir, int yDir, out RaycastHit2D hit)
+    {
+        Vector3 start = transform.position;
+        Vector3 direction = new Vector3(xDir, yDir, 0);
+        hit = Physics2D.Raycast(transform.position, direction, 1f);
 
+        if (hit.collider != null)
+        {
+            canMove = false;
+            if (hit.collider.tag == "Wall")
+            {
+                hit.collider.GetComponent<Wall>().DamageWall(wallDamage);                
+            }
+               
+
+            return;
+        }
+        else
+        // if raycast doesn't hit
+        {
+            canMove = false;
+            moving = true;
+            unitposition += direction * movelength;
+            return;
+
+        }
+    }
     private void OnDisable ()
     // This function is called when the behavior becomes inactive.
     {

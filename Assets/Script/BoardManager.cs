@@ -60,13 +60,6 @@ public class BoardManager : MonoBehaviour
 
                 instance.transform.SetParent(boardHolder);
 
-                if (y % 2 != 0)
-                {
-                    toInstantiate = walls[0];
-                    gridpositions.Remove(new Vector3(x, y, 0f));
-                    instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
-                }
-
             }
         }
     }
@@ -75,10 +68,10 @@ public class BoardManager : MonoBehaviour
     void RoomSetup()
     {
         
-        var maze = MazeGenerator.Generate(columns/2+1, rows/2);
+        var maze = MazeGenerator.Generate(columns/2, rows/2);
         GameObject toInstantiate = walls[0];
 
-        for (int x = 0; x < columns/2+1; x++)
+        for (int x = 0; x < columns/2; x++)
         {
             for (int y = 0; y < rows/2; y++)
             {
@@ -96,14 +89,16 @@ public class BoardManager : MonoBehaviour
                     instance = Instantiate(toInstantiate, position + new Vector3(-1, 1, 0f), Quaternion.identity) as GameObject;
                     instance = Instantiate(toInstantiate, position + new Vector3(-1, -1, 0f), Quaternion.identity) as GameObject;
                 }
-                /*if (x == columns/2)
+                if (x == columns/2-1)
                 {
                     if (cell.HasFlag(WallState.RIGHT))
                     {
-                        GameObject instance = Instantiate(toInstantiate, position + new Vector3(0f, 1, 0f), Quaternion.identity) as GameObject;
+                        GameObject instance = Instantiate(toInstantiate, position + new Vector3(1, 0f, 0f), Quaternion.identity) as GameObject;
+                        instance = Instantiate(toInstantiate, position + new Vector3(1, 1, 0f), Quaternion.identity) as GameObject;
+                        instance = Instantiate(toInstantiate, position + new Vector3(1, -1, 0f), Quaternion.identity) as GameObject;
                     }
                 }
-                */
+                
             }
         }
         
