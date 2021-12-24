@@ -83,13 +83,12 @@ public class Player : MovingObject
 
         if (hit.collider != null)
         {
-            canMove = false;
+            canMove = false;    
             if (hit.collider.tag == "Wall")
             {
-                hit.collider.GetComponent<Wall>().DamageWall(wallDamage);                
+                hit.collider.GetComponent<Wall>().DamageWall(wallDamage);
             }
-               
-
+     
             return;
         }
         else
