@@ -45,7 +45,7 @@ public class Player : MovingObject
     private void Movefun ()
     // This function translates directional keys into movement
     {
-        RaycastHit2D hit;
+        RaycastHit2D[] hit;
 
         bool upPress = Input.GetKey(KeyCode.UpArrow);
         bool downPress = Input.GetKey(KeyCode.DownArrow);
@@ -67,26 +67,27 @@ public class Player : MovingObject
         else if (directionSum == 1)
         {
             AttemptMove(rightInt - leftInt, upInt - downInt, out hit);
-            /*if (hit.collider && hit.collider.tag == "Wall") // use the ray cast to figure out what object you hit
-            {
-                hit.collider.GetComponent<Wall>().DamageWall(wallDamage);
-            }*/
         }
 
         
     }
-    protected override void AttemptMove(int xDir, int yDir, out RaycastHit2D hit)
+    
+    protected void AttemptMove(int xDir, int yDir, out RaycastHit2D[] hit)
     {
         Vector3 start = transform.position;
         Vector3 direction = new Vector3(xDir, yDir, 0);
-        hit = Physics2D.Raycast(transform.position, direction, 1f);
+        hit = Physics2D.RaycastAll(transform.position, direction, 1f);
 
-        if (hit.collider != null)
+        if (hit.Length >= 1)
         {
             canMove = false;    
-            if (hit.collider.tag == "Wall")
+            if (hit[0].collider.tag == "Wall")
             {
-                hit.collider.GetComponent<Wall>().DamageWall(wallDamage);
+                for (int i = 0; i<hit.Length; i++)
+                {
+                    hit[i].collider.GetComponent<Wall>().DamageWall(wallDamage);
+                }
+                
             }
      
             return;
