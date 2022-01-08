@@ -86,6 +86,7 @@ public class Player : MovingObject
                 for (int i = 0; i<hit.Length; i++)
                 {
                     hit[i].collider.GetComponent<Wall>().DamageWall(wallDamage);
+                    animator.SetTrigger("drone_attack");
                 }
                 
             }
