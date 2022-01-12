@@ -78,7 +78,7 @@ public class TimeManager : MonoBehaviour
         {
          Queen.transform.DOScale(1.5f, 0.1f).OnComplete(() =>
         {
-         Queen.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f); // using .5 instead of 1 since the queen sprite is too large. The initial object is .5 scale
+         Queen.transform.localScale = new Vector3(1, 1, 1); 
         });
             Instantiate(activation_signal, ActiveUnit.transform.position, Quaternion.identity); //creates the signal to the units at the location of the queen sprite
             offset_count++;
