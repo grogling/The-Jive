@@ -47,13 +47,13 @@ public class BoardManager : MonoBehaviour
     void BoardSetup()
     {
         boardHolder = new GameObject("Board").transform;
-        for (int x = -1; x < columns + 1; x++)
+        for (int x = 0; x < columns; x++)
         {
-            for (int y = -1; y < rows + 1; y++)
+            for (int y = -1 ; y < rows; y++)
             {
                 GameObject toInstantiate = floortiles[0];
                          
-                if (x == -1 || x == columns || y == -1 || y == rows)
+                if (y == -1)
                     toInstantiate = walls[0];
 
                 GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f),Quaternion.identity) as GameObject;
@@ -101,21 +101,7 @@ public class BoardManager : MonoBehaviour
                 
             }
         }
-        
-                /*
-                for (int x = 0; x < columns + 1; x++)
-                {
-                    for (int y = 0; y < rows + 1; y++)
-                    {
-                        if (x == 4 || x == 9 || y==4 || y==9)
-                        {
-                            gridpositions.Remove(new Vector3(x, y, 0f));
-                            GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
-                        }
-                    }
 
-                }
-                */
     }
 
 
@@ -144,7 +130,7 @@ public class BoardManager : MonoBehaviour
 
     public void SetupScene()
     {
-        //BoardSetup();
+        BoardSetup();
         InitializeList();
         RoomSetup();
         

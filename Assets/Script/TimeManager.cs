@@ -9,7 +9,7 @@ using System.CodeDom;
 
 public class TimeManager : MonoBehaviour
 {
-    public GameObject[] Units = new GameObject[4];
+    public GameObject[] Units = new GameObject[2];//eventually make this a variable size
     public GameObject NextUnit; // index used to keep track of the unit after the current unit
     public GameObject ActiveUnit; // the unit currently allowed to move
     public GameObject Queen; // 
