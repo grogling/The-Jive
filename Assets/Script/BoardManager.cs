@@ -24,6 +24,10 @@ public class BoardManager : MonoBehaviour
     public int cellSize = 1;
     public GameObject[] walls;
     public GameObject[] floortiles;
+    public GameObject[] FoWMain;
+    public GameObject[] FoWSecondary;
+    public GameObject[] FoWCanvas;
+    public GameObject[] enemies;
     
 
     private Transform boardHolder;
@@ -33,15 +37,16 @@ public class BoardManager : MonoBehaviour
     {
         gridpositions.Clear ();
 
-        for (int x = 1; x < columns-1; x++)
+        for (int x = 0; x < columns; x++)
         {
-            for (int y = 1; y < rows-1; y++)
+            for (int y = 0; y < rows; y++)
             {
                 gridpositions.Add(new Vector3(x, y, 0f));
 
             }
                 
         }
+        Debug.Log(gridpositions.Count);
     }
 
     void BoardSetup()
@@ -62,6 +67,9 @@ public class BoardManager : MonoBehaviour
 
             }
         }
+        GameObject FoW1 = Instantiate(FoWMain[0]) as GameObject;
+        GameObject FoW2 = Instantiate(FoWSecondary[0]) as GameObject;
+        GameObject FoW3 = Instantiate(FoWCanvas[0]) as GameObject;
     }
 
 
@@ -82,6 +90,7 @@ public class BoardManager : MonoBehaviour
                     GameObject instance = Instantiate(toInstantiate, position + new Vector3(0f, 1, 0f), Quaternion.identity) as GameObject;
                     instance = Instantiate(toInstantiate, position + new Vector3(-1, 1, 0f), Quaternion.identity) as GameObject;
                     instance = Instantiate(toInstantiate, position + new Vector3(1, 1, 0f), Quaternion.identity) as GameObject;
+                    gridpositions.RemoveAt(gridpositions.LastIndexOf(position + new Vector3(0f, 1, 0f)));
                 }
                 if (cell.HasFlag(WallState.LEFT))
                 {
@@ -101,7 +110,7 @@ public class BoardManager : MonoBehaviour
                 
             }
         }
-
+        Debug.Log(gridpositions.Count);
     }
 
 
