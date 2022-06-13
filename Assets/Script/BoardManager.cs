@@ -37,9 +37,9 @@ public class BoardManager : MonoBehaviour
     {
         gridpositions.Clear ();
 
-        for (int x = 0; x < columns; x++)
+        for (int x = 0; x < columns+1; x++)
         {
-            for (int y = 0; y < rows; y++)
+            for (int y = 0; y < rows+1; y++)
             {
                 gridpositions.Add(new Vector3(x, y, 0f));
 
@@ -90,13 +90,32 @@ public class BoardManager : MonoBehaviour
                     GameObject instance = Instantiate(toInstantiate, position + new Vector3(0f, 1, 0f), Quaternion.identity) as GameObject;
                     instance = Instantiate(toInstantiate, position + new Vector3(-1, 1, 0f), Quaternion.identity) as GameObject;
                     instance = Instantiate(toInstantiate, position + new Vector3(1, 1, 0f), Quaternion.identity) as GameObject;
-                    gridpositions.RemoveAt(gridpositions.LastIndexOf(position + new Vector3(0f, 1, 0f)));
+                    if (gridpositions.LastIndexOf(position + new Vector3(0f, 1, 0f)) != -1)
+                    {
+                        gridpositions.RemoveAt(gridpositions.LastIndexOf(position + new Vector3(0f, 1, 0f))); 
+                    }
+                    if (gridpositions.LastIndexOf(position + new Vector3(-1, 1, 0f)) != -1)
+                    {
+                        gridpositions.RemoveAt(gridpositions.LastIndexOf(position + new Vector3(-1, 1, 0f))); 
+                    }
+                    if (gridpositions.LastIndexOf(position + new Vector3(1, 1, 0f)) != -1)
+                    {
+                        gridpositions.RemoveAt(gridpositions.LastIndexOf(position + new Vector3(1, 1, 0f)));
+                    }
                 }
                 if (cell.HasFlag(WallState.LEFT))
                 {
                     GameObject instance = Instantiate(toInstantiate, position + new Vector3(-1, 0f, 0f), Quaternion.identity) as GameObject;
-                    instance = Instantiate(toInstantiate, position + new Vector3(-1, 1, 0f), Quaternion.identity) as GameObject;
+                    //instance = Instantiate(toInstantiate, position + new Vector3(-1, 1, 0f), Quaternion.identity) as GameObject;
                     instance = Instantiate(toInstantiate, position + new Vector3(-1, -1, 0f), Quaternion.identity) as GameObject;
+                    if (gridpositions.LastIndexOf(position + new Vector3(-1, 0f, 0f)) != -1)
+                    {
+                        gridpositions.RemoveAt(gridpositions.LastIndexOf(position + new Vector3(-1, 0f, 0f)));
+                    }
+                    if (gridpositions.LastIndexOf(position + new Vector3(-1, -1, 0f)) != -1)
+                    {
+                        gridpositions.RemoveAt(gridpositions.LastIndexOf(position + new Vector3(-1, -1, 0f)));
+                    }
                 }
                 if (x == columns/2-1)
                 {
@@ -105,6 +124,18 @@ public class BoardManager : MonoBehaviour
                         GameObject instance = Instantiate(toInstantiate, position + new Vector3(1, 0f, 0f), Quaternion.identity) as GameObject;
                         instance = Instantiate(toInstantiate, position + new Vector3(1, 1, 0f), Quaternion.identity) as GameObject;
                         instance = Instantiate(toInstantiate, position + new Vector3(1, -1, 0f), Quaternion.identity) as GameObject;
+                        if (gridpositions.LastIndexOf(position + new Vector3(1, 0f, 0f)) != -1)
+                        {
+                            gridpositions.RemoveAt(gridpositions.LastIndexOf(position + new Vector3(1, 0f, 0f)));
+                        }
+                        if (gridpositions.LastIndexOf(position + new Vector3(1, -1, 0f)) != -1)
+                        {
+                            gridpositions.RemoveAt(gridpositions.LastIndexOf(position + new Vector3(1, -1, 0f)));
+                        }
+                        if (gridpositions.LastIndexOf(position + new Vector3(1, 1, 0f)) != -1)
+                        {
+                            gridpositions.RemoveAt(gridpositions.LastIndexOf(position + new Vector3(1, 1, 0f)));
+                        }
                     }
                 }
                 
