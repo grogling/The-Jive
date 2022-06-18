@@ -19,6 +19,8 @@ public class BoardManager : MonoBehaviour
         }
     }
 
+    public Count enemyCount = new Count(4, 5);
+    
     public int columns = 15;
     public int rows = 15;
     public int cellSize = 1;
@@ -173,7 +175,7 @@ public class BoardManager : MonoBehaviour
         BoardSetup();
         InitializeList();
         RoomSetup();
-        
+        ObjectPlacement(enemies, enemyCount.minimum, enemyCount.maximum);
         //ObjectPlacement(walls, 1, 10);
         //foreach (Vector3 x in gridpositions)
         //{
